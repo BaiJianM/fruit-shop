@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_notice")
 public class Notice {
 
-    private Long id;
+    private Integer id;
 
     private String content;
 
@@ -25,6 +25,6 @@ public class Notice {
     private Integer endTime;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

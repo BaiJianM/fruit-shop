@@ -19,30 +19,30 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_address")
 public class Address {
 
-    private Long id;
+    private Integer id;
 
     @Schema(description = "unknown", example = "1")
     private String name;
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("user_id")
-    private Long userId;
+    private Integer userId;
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("country_id")
-    private Long countryId;
+    private Integer countryId;
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("province_id")
-    private Long provinceId;
+    private Integer provinceId;
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("city_id")
-    private Long cityId;
+    private Integer cityId;
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("district_id")
-    private Long districtId;
+    private Integer districtId;
 
     @Schema(description = "unknown", example = "1")
     private String address;
@@ -52,10 +52,10 @@ public class Address {
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("is_default")
-    private Boolean isDefault;
+    private Integer isDefault;
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

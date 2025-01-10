@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_specification")
 public class Specification {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 

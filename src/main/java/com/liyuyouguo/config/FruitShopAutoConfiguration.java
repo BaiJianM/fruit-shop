@@ -1,5 +1,8 @@
 package com.liyuyouguo.config;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
+import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
@@ -160,4 +163,13 @@ public class FruitShopAutoConfiguration {
 
     // endregion
 
+    @Bean
+    public WxMaService wxMaService(FruitShopProperties properties) {
+        WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
+        config.setAppid(properties.getAppid());
+        config.setSecret(properties.getSecret());
+        WxMaService service = new WxMaServiceImpl();
+        service.setWxMaConfig(config);
+        return service;
+    }
 }

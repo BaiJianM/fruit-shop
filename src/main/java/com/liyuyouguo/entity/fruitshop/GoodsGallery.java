@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_goods_gallery")
 public class GoodsGallery {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("goods_id")
     private Integer goodsId;
@@ -32,6 +32,6 @@ public class GoodsGallery {
     private Integer sortOrder;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

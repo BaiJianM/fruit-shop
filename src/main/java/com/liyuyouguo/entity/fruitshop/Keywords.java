@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_keywords")
 public class Keywords {
 
-    private Long id;
+    private Integer id;
 
     private String keyword;
 

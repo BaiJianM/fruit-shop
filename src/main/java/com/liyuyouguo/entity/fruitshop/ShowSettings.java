@@ -17,14 +17,14 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_show_settings")
 public class ShowSettings {
 
-    private Long id;
+    private Integer id;
 
-    private Boolean banner;
+    private Integer banner;
 
-    private Boolean channel;
+    private Integer channel;
 
     @JsonProperty("index_banner_img")
-    private Boolean indexBannerImg;
+    private Integer indexBannerImg;
 
-    private Boolean notice;
+    private Integer notice;
 }

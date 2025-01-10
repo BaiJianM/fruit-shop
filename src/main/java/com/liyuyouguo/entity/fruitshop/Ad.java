@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_ad")
 public class Ad {
 
-    private Long id;
+    private Integer id;
 
     /**
      * 0-商品，1-链接
@@ -48,7 +48,7 @@ public class Ad {
     private String endTime;
 
     @Schema(description = "unknown", example = "1")
-    private Boolean enabled;
+    private Integer enabled;
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("sort_order")
@@ -56,6 +56,6 @@ public class Ad {
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

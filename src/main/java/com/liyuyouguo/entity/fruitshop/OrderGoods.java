@@ -19,13 +19,13 @@ import java.math.BigDecimal;
 @TableName("hiolabs_order_goods")
 public class OrderGoods {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("order_id")
-    private Long orderId;
+    private Integer orderId;
 
     @JsonProperty("goods_id")
-    private Long goodsId;
+    private Integer goodsId;
 
     @JsonProperty("goods_name")
     private String goodsName;
@@ -34,7 +34,7 @@ public class OrderGoods {
     private String goodsAka;
 
     @JsonProperty("product_id")
-    private Long productId;
+    private Integer productId;
 
     private Integer number;
 
@@ -51,9 +51,9 @@ public class OrderGoods {
     private String listPicUrl;
 
     @JsonProperty("user_id")
-    private Long userId;
+    private Integer userId;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

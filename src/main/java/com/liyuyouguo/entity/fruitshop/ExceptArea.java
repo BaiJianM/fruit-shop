@@ -17,13 +17,13 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_except_area")
 public class ExceptArea {
 
-    private Long id;
+    private Integer id;
 
     private String content;
 
     private String area;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

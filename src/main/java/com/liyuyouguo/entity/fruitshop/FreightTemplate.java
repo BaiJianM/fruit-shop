@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @TableName("hiolabs_freight_template")
 public class FreightTemplate {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -30,6 +30,6 @@ public class FreightTemplate {
     private Integer freightType;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

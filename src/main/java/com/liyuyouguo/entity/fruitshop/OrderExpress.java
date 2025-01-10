@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author baijianmin
  */
@@ -17,13 +19,13 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_order_express")
 public class OrderExpress {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("order_id")
-    private Long orderId;
+    private Integer orderId;
 
     @JsonProperty("shipper_id")
-    private Long shipperId;
+    private Integer shipperId;
 
     @JsonProperty("shipper_name")
     private String shipperName;
@@ -37,22 +39,22 @@ public class OrderExpress {
     private String traces;
 
     @JsonProperty("is_finish")
-    private Boolean isFinish;
+    private Integer isFinish;
 
     @JsonProperty("request_count")
     private Integer requestCount;
 
     @JsonProperty("request_time")
-    private Integer requestTime;
+    private LocalDateTime requestTime;
 
     @JsonProperty("add_time")
-    private Integer addTime;
+    private LocalDateTime addTime;
 
     @JsonProperty("update_time")
-    private Integer updateTime;
+    private LocalDateTime updateTime;
 
     @JsonProperty("express_type")
-    private Boolean expressType;
+    private Integer expressType;
 
     @JsonProperty("region_code")
     private String regionCode;

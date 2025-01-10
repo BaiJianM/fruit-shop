@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author baijianmin
  */
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_user")
 public class User {
 
-    private Long id;
+    private Integer id;
 
     private String nickname;
 
@@ -32,10 +34,10 @@ public class User {
     private Integer birthday;
 
     @JsonProperty("register_time")
-    private Integer registerTime;
+    private LocalDateTime registerTime;
 
     @JsonProperty("last_login_time")
-    private Integer lastLoginTime;
+    private LocalDateTime lastLoginTime;
 
     @JsonProperty("last_login_ip")
     private String lastLoginIp;
@@ -51,7 +53,7 @@ public class User {
     private String weixinOpenid;
 
     @JsonProperty("name_mobile")
-    private Boolean nameMobile;
+    private Integer nameMobile;
 
     private String country;
 

@@ -80,3 +80,7 @@ springdoc:
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.liyuyouguo
+
+fruit-shop:
+  appid: wx7af111110000000
+  secret: cb8e5adce569f9bddce5b8123123e1115aaddce505

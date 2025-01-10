@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author baijianmin
  */
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_admin")
 public class Admin {
 
-    private Long id;
+    private Integer id;
 
     @Schema(description = "账号名", example = "1")
     @JsonProperty("username")
@@ -37,10 +39,10 @@ public class Admin {
 
     @Schema(description = "最后登录时间", example = "1")
     @JsonProperty("last_login_time")
-    private Long lastLoginTime;
+    private LocalDateTime lastLoginTime;
 
     @Schema(description = "unknown", example = "1")
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

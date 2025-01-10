@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author baijianmin
@@ -19,13 +20,13 @@ import java.math.BigDecimal;
 @TableName("hiolabs_order")
 public class Order {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("order_sn")
     private String orderSn;
 
     @JsonProperty("user_id")
-    private Long userId;
+    private Integer userId;
 
     @JsonProperty("order_status")
     private Integer orderStatus;
@@ -86,19 +87,19 @@ public class Order {
     private BigDecimal goodsPrice;
 
     @JsonProperty("add_time")
-    private Integer addTime;
+    private LocalDateTime addTime;
 
     @JsonProperty("pay_time")
-    private Integer payTime;
+    private LocalDateTime payTime;
 
     @JsonProperty("shipping_time")
-    private Integer shippingTime;
+    private LocalDateTime shippingTime;
 
     @JsonProperty("confirm_time")
-    private Integer confirmTime;
+    private LocalDateTime confirmTime;
 
     @JsonProperty("dealdone_time")
-    private Integer dealdoneTime;
+    private LocalDateTime dealdoneTime;
 
     @JsonProperty("freight_price")
     private Integer freightPrice;
@@ -112,6 +113,6 @@ public class Order {
     private Integer orderType;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

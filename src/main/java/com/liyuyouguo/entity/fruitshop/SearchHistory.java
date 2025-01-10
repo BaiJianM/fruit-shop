@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author baijianmin
  */
@@ -17,14 +19,14 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_search_history")
 public class SearchHistory {
 
-    private Long id;
+    private Integer id;
 
     private String keyword;
 
     private String from;
 
     @JsonProperty("add_time")
-    private Long addTime;
+    private LocalDateTime addTime;
 
     @JsonProperty("user_id")
     private String userId;

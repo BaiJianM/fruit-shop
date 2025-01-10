@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author baijianmin
  */
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_formid")
 public class FormId {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("user_id")
     private Integer userId;
@@ -26,12 +28,12 @@ public class FormId {
     private Integer orderId;
 
     @JsonProperty("form_id")
-    private String formId;
+    private Integer formId;
 
     @JsonProperty("add_time")
-    private Integer addTime;
+    private LocalDateTime addTime;
 
     @JsonProperty("use_times")
-    private Boolean useTimes;
+    private Integer useTimes;
 
 }

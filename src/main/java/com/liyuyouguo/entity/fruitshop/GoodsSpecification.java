@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_goods_specification")
 public class GoodsSpecification {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("goods_id")
     private Integer goodsId;
@@ -31,6 +31,6 @@ public class GoodsSpecification {
     private String picUrl;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

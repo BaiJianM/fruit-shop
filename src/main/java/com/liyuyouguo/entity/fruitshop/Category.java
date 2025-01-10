@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_category")
 public class Category {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -36,7 +36,7 @@ public class Category {
     private Integer showIndex;
 
     @JsonProperty("is_show")
-    private Boolean isShow;
+    private Integer isShow;
 
     @JsonProperty("icon_url")
     private String iconUrl;
@@ -53,9 +53,9 @@ public class Category {
     private Integer pHeight;
 
     @JsonProperty("is_category")
-    private Boolean isCategory;
+    private Integer isCategory;
 
     @JsonProperty("is_channel")
-    private Boolean isChannel;
+    private Integer isChannel;
 
 }

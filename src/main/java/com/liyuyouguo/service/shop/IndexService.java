@@ -2,6 +2,7 @@ package com.liyuyouguo.service.shop;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.liyuyouguo.beans.vo.shop.AppInfoVo;
 import com.liyuyouguo.beans.vo.shop.CategoryVo;
 import com.liyuyouguo.commons.FruitShopException;
 import com.liyuyouguo.commons.ShopError;
@@ -25,8 +26,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IndexService {
 
-    private final ShowSettingsMapper showSettingsMapper;
-
     private final AdMapper adMapper;
 
     private final NoticeMapper noticeMapper;
@@ -38,19 +37,10 @@ public class IndexService {
     private final CartMapper cartMapper;
 
     /**
-     * 获取首页显示配置
-     *
-     * @return ShowSettings 首页显示配置实体类
-     */
-    public ShowSettings getShowSettings() {
-        return showSettingsMapper.selectById(1);
-    }
-
-    /**
      * 获取小程序信息
      */
-    public void getAppInfo() {
-        List<Ad> ads = adMapper.selectList(Wrappers.lambdaQuery(Ad.class)
+    public AppInfoVo getAppInfo() {
+        List<Ad> banner = adMapper.selectList(Wrappers.lambdaQuery(Ad.class)
                 .eq(Ad::getEnabled, 1)
                 .eq(Ad::getIsDelete, 0)
                 .orderByAsc(Ad::getSortOrder));
@@ -64,14 +54,14 @@ public class IndexService {
                 .eq(Category::getIsShow, 1)
                 .eq(Category::getParentId, 0)
                 .orderByAsc(Category::getSortOrder));
-        Collection<CategoryVo> categoryVos = ConvertUtils.convertCollection(categories, CategoryVo::new)
+        List<CategoryVo> categoryVos = (List<CategoryVo>) ConvertUtils.convertCollection(categories, CategoryVo::new)
                 .orElseThrow(() -> new FruitShopException(ShopError.INDEX_ERROR));
         categoryVos.forEach(categoryVo -> {
             List<Goods> goods = goodsMapper.selectList(Wrappers.lambdaQuery(Goods.class)
                     .eq(Goods::getCategoryId, categoryVo.getId())
                     .ge(Goods::getGoodsNumber, 0)
                     .eq(Goods::getIsOnSale, 1)
-                    .eq(Goods::getIsIndex, 0)
+                    .eq(Goods::getIsIndex, 1)
                     .eq(Goods::getIsDelete, 0)
                     .orderByAsc(Goods::getSortOrder));
             categoryVo.setGoodsList(goods);
@@ -81,7 +71,14 @@ public class IndexService {
         List<Cart> carts = cartMapper.selectList(Wrappers.lambdaQuery(Cart.class)
                 .eq(Cart::getUserId, userId)
                 .eq(Cart::getIsDelete, 0));
-        long sum = carts.stream().mapToLong(Cart::getNumber).sum();
+        long cartCount = carts.stream().mapToLong(Cart::getNumber).sum();
+        AppInfoVo appInfoVo = new AppInfoVo();
+        appInfoVo.setChannel(channels);
+        appInfoVo.setBanner(banner);
+        appInfoVo.setNotice(notices);
+        appInfoVo.setCategoryList(categoryVos);
+        appInfoVo.setCartCount(cartCount);
+        return appInfoVo;
     }
 
 }

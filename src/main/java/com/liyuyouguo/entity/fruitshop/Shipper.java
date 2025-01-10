@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_shipper")
 public class Shipper {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -32,5 +32,5 @@ public class Shipper {
     @JsonProperty("customer_name")
     private String customerName;
 
-    private Boolean enabled;
+    private Integer enabled;
 }

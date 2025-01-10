@@ -19,19 +19,19 @@ import java.math.BigDecimal;
 @TableName("hiolabs_cart")
 public class Cart {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("user_id")
-    private Long userId;
+    private Integer userId;
 
     @JsonProperty("goods_id")
-    private Long goodsId;
+    private Integer goodsId;
 
     @JsonProperty("goods_sn")
     private String goodsSn;
 
     @JsonProperty("product_id")
-    private Long productId;
+    private Integer productId;
 
     @JsonProperty("goods_name")
     private String goodsName;
@@ -48,7 +48,7 @@ public class Cart {
     @JsonProperty("retail_price")
     private BigDecimal retailPrice;
 
-    private Long number;
+    private Integer number;
 
     @JsonProperty("goods_specifition_name_value")
     private String goodsSpecifitionNameValue;
@@ -56,13 +56,13 @@ public class Cart {
     @JsonProperty("goods_specifition_ids")
     private String goodsSpecifitionIds;
 
-    private Boolean checked;
+    private Integer checked;
 
     @JsonProperty("list_pic_url")
     private String listPicUrl;
 
     @JsonProperty("freight_template_id")
-    private Long freightTemplateId;
+    private Integer freightTemplateId;
 
     @JsonProperty("is_on_sale")
     private Boolean isOnSale;
@@ -71,9 +71,9 @@ public class Cart {
     private Integer addTime;
 
     @JsonProperty("is_fast")
-    private Boolean isFast;
+    private Integer isFast;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

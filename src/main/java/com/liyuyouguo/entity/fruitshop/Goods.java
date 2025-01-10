@@ -19,13 +19,13 @@ import java.math.BigDecimal;
 @TableName("hiolabs_goods")
 public class Goods {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("category_id")
     private Integer categoryId;
 
     @JsonProperty("is_on_sale")
-    private Boolean isOnSale;
+    private Integer isOnSale;
 
     private String name;
 
@@ -59,10 +59,10 @@ public class Goods {
     private Integer sortOrder;
 
     @JsonProperty("is_index")
-    private Boolean isIndex;
+    private Integer isIndex;
 
     @JsonProperty("is_new")
-    private Boolean isNew;
+    private Integer isNew;
 
     @JsonProperty("goods_unit")
     private String goodsUnit;
@@ -74,18 +74,18 @@ public class Goods {
     private String listPicUrl;
 
     @JsonProperty("freight_template_id")
-    private Integer freightTemplateId;
+    private Long freightTemplateId;
 
     @JsonProperty("freight_type")
     private Integer freightType;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
     @JsonProperty("has_gallery")
-    private Boolean hasGallery;
+    private Integer hasGallery;
 
     @JsonProperty("has_done")
-    private Boolean hasDone;
+    private Integer hasDone;
 
 }

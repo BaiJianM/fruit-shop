@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_freight_template_detail")
 public class FreightTemplateDetail {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("template_id")
     private Integer templateId;
@@ -28,6 +28,6 @@ public class FreightTemplateDetail {
     private Integer area;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

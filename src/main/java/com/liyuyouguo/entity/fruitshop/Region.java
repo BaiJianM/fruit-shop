@@ -17,23 +17,23 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_region")
 public class Region {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("parent_id")
-    private Long parentId;
+    private Integer parentId;
 
     private String name;
 
     private Integer type;
 
     @JsonProperty("agency_id")
-    private Long agencyId;
+    private Integer agencyId;
 
-    private Long area;
+    private Integer area;
 
     @JsonProperty("area_code")
     private String areaCode;
 
     @JsonProperty("far_area")
-    private Long farArea;
+    private Integer farArea;
 }

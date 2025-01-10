@@ -19,13 +19,13 @@ import java.math.BigDecimal;
 @TableName("hiolabs_freight_template_group")
 public class FreightTemplateGroup {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("template_id")
     private Integer templateId;
 
     @JsonProperty("is_default")
-    private Boolean isDefault;
+    private Integer isDefault;
 
     private String area;
 
@@ -46,6 +46,6 @@ public class FreightTemplateGroup {
     private BigDecimal freeByMoney;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

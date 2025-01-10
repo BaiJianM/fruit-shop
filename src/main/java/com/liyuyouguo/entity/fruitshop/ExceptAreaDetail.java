@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_except_area_detail")
 public class ExceptAreaDetail {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("except_area_id")
     private Integer exceptAreaId;
@@ -25,6 +25,6 @@ public class ExceptAreaDetail {
     private Integer area;
 
     @JsonProperty("is_delete")
-    private Boolean isDelete;
+    private Integer isDelete;
 
 }

@@ -17,10 +17,10 @@ import lombok.NoArgsConstructor;
 @TableName("hiolabs_settings")
 public class Settings {
 
-    private Long id;
+    private Integer id;
 
     @JsonProperty("auto_delivery")
-    private Boolean autoDelivery;
+    private Integer autoDelivery;
 
     private String name;
 
@@ -57,5 +57,5 @@ public class Settings {
 
     private Integer countdown;
 
-    private Boolean reset;
+    private Integer reset;
 }

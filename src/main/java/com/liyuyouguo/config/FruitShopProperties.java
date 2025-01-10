@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author baijianmin
  */
 @Data
-@ConfigurationProperties(prefix = "answer")
+@ConfigurationProperties(prefix = "fruit-shop")
 public class FruitShopProperties {
 
     /**
