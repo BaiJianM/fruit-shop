@@ -2,8 +2,13 @@ package com.liyuyouguo.service.shop;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.liyuyouguo.beans.PageResult;
+import com.liyuyouguo.beans.dto.shop.CatalogQueryDto;
 import com.liyuyouguo.entity.fruitshop.Category;
+import com.liyuyouguo.entity.fruitshop.Goods;
 import com.liyuyouguo.mapper.CategoryMapper;
+import com.liyuyouguo.mapper.GoodsMapper;
+import com.liyuyouguo.utils.ConvertUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,8 @@ public class CategoryService {
 
     private final CategoryMapper categoryMapper;
 
+    private final GoodsMapper goodsMapper;
+
     /**
      * 获取商品目录
      *
@@ -38,4 +45,40 @@ public class CategoryService {
         return records == null ? Collections.emptyList() : records;
     }
 
+    /**
+     * 获取当前目录下的商品列表
+     *
+     * @param dto 查询参数
+     * @return List<Goods> 商品列表
+     */
+    public PageResult<Goods> getCurrentCatalog(CatalogQueryDto dto) {
+        Integer categoryId = dto.getId();
+        Page<Goods> page = new Page<>();
+        page.setCurrent(dto.getCurrent());
+        page.setSize(dto.getSize());
+        Page<Goods> goodsPage;
+        if (categoryId == 0) {
+            goodsPage = goodsMapper.selectPage(page, Wrappers.lambdaQuery(Goods.class)
+                    .eq(Goods::getIsOnSale, 1)
+                    .eq(Goods::getIsDelete, 0)
+                    .orderByAsc(Goods::getSortOrder));
+        } else {
+            goodsPage = goodsMapper.selectPage(page, Wrappers.lambdaQuery(Goods.class)
+                    .eq(Goods::getIsOnSale, 1)
+                    .eq(Goods::getIsDelete, 0)
+                            .eq(Goods::getCategoryId, categoryId)
+                    .orderByAsc(Goods::getSortOrder));
+        }
+        return ConvertUtils.convert(goodsPage, PageResult<Goods>::new).orElseThrow();
+    }
+
+    /**
+     * 获取选中目录
+     *
+     * @param categoryId 分类id
+     * @return Category 分类信息
+     */
+    public Category getCurrentCatalogById(Integer categoryId) {
+        return categoryMapper.selectById(categoryId);
+    }
 }

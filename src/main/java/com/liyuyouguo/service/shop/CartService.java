@@ -65,7 +65,7 @@ public class CartService {
 
     public CartInfoVo getCart(Integer isFast) {
         // TODO 这里少一个从token获取登录人id的操作
-        Integer userId = 1;
+        Integer userId = 1048;
         List<Cart> carts = cartMapper.selectList(Wrappers.lambdaQuery(Cart.class)
                 .eq(Cart::getUserId, userId)
                 .eq(Cart::getIsDelete, 0)
@@ -131,5 +131,14 @@ public class CartService {
 
         cartInfoVo.setCartTotal(cartTotalVo);
         return cartInfoVo;
+    }
+
+    /**
+     * 获取购物车信息，所有对购物车的增删改操作，都要重新返回购物车的信息
+     *
+     * @return CartInfoVo 购物车信息
+     */
+    public CartInfoVo getIndex() {
+        return this.getCart(0);
     }
 }

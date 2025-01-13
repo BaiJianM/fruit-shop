@@ -67,7 +67,7 @@ public class IndexService {
             categoryVo.setGoodsList(goods);
         });
         // TODO 这里少一个从token获取登录人id的操作
-        Long userId = 1L;
+        Long userId = 1048L;
         List<Cart> carts = cartMapper.selectList(Wrappers.lambdaQuery(Cart.class)
                 .eq(Cart::getUserId, userId)
                 .eq(Cart::getIsDelete, 0));

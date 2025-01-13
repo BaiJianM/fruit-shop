@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.liyuyouguo.beans.vo.shop.UserLoginInfoVo;
 import com.liyuyouguo.commons.FruitShopException;
 import com.liyuyouguo.commons.ShopError;
+import com.liyuyouguo.commons.SystemError;
 import com.liyuyouguo.entity.fruitshop.User;
 import com.liyuyouguo.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -77,4 +78,20 @@ public class UserService {
         return registerInfoVo;
     }
 
+    /**
+     * 获取登录用户信息
+     *
+     * @return User 登录用户信息
+     */
+    public User getUserDetail() {
+        // TODO 这里少一个从token获取登录人id的操作
+        Integer userId = 1048;
+        if (userId != 0) {
+            User user = userMapper.selectById(userId);
+            user.setNickname(new String(Base64.getDecoder().decode(user.getNickname())));
+            return user;
+        } else {
+            throw new FruitShopException(SystemError.LOGIN_FIRST);
+        }
+    }
 }

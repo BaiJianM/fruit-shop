@@ -40,7 +40,7 @@ public class GoodsService {
 
     public GoodsInfoVo getGoodsDetail(Integer goodsId) {
         // TODO 这里少一个从token获取登录人id的操作
-        Integer userId = 1;
+        Integer userId = 1048;
         // 获取商品
         Goods goods = goodsMapper.selectOne(Wrappers.lambdaQuery(Goods.class)
                 .eq(Goods::getId, goodsId)
