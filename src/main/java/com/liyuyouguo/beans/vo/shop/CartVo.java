@@ -15,4 +15,7 @@ public class CartVo extends Cart {
     @JsonProperty("weight_count")
     private Double weightCount;
 
+    @JsonProperty("goods_number")
+    private Integer goodsNumber;
+
 }

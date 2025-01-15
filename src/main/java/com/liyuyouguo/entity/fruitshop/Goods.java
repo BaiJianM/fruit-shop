@@ -74,7 +74,7 @@ public class Goods {
     private String listPicUrl;
 
     @JsonProperty("freight_template_id")
-    private Long freightTemplateId;
+    private Integer freightTemplateId;
 
     @JsonProperty("freight_type")
     private Integer freightType;

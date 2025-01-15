@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author baijianmin
@@ -65,10 +66,10 @@ public class Cart {
     private Integer freightTemplateId;
 
     @JsonProperty("is_on_sale")
-    private Boolean isOnSale;
+    private Integer isOnSale;
 
     @JsonProperty("add_time")
-    private Integer addTime;
+    private LocalDateTime addTime;
 
     @JsonProperty("is_fast")
     private Integer isFast;
