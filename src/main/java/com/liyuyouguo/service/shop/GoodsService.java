@@ -1,5 +1,6 @@
 package com.liyuyouguo.service.shop;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liyuyouguo.beans.vo.shop.GoodsInfoVo;
@@ -8,16 +9,16 @@ import com.liyuyouguo.commons.FruitShopException;
 import com.liyuyouguo.commons.ShopError;
 import com.liyuyouguo.entity.fruitshop.Goods;
 import com.liyuyouguo.entity.fruitshop.GoodsGallery;
-import com.liyuyouguo.entity.fruitshop.GoodsSpecification;
 import com.liyuyouguo.entity.fruitshop.Product;
-import com.liyuyouguo.mapper.FootPrintMapper;
+import com.liyuyouguo.entity.fruitshop.SearchHistory;
 import com.liyuyouguo.mapper.GoodsGalleryMapper;
 import com.liyuyouguo.mapper.GoodsMapper;
-import com.liyuyouguo.mapper.ProductMapper;
+import com.liyuyouguo.mapper.SearchHistoryMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -37,6 +38,8 @@ public class GoodsService {
     private final FootPrintService footPrintService;
 
     private final ProductService productService;
+
+    private final SearchHistoryMapper searchHistoryMapper;
 
     public GoodsInfoVo getGoodsDetail(Integer goodsId) {
         // TODO 这里少一个从token获取登录人id的操作
@@ -77,5 +80,76 @@ public class GoodsService {
                 .eq(Goods::getIsOnSale, 1)
                 .eq(Goods::getIsDelete, 0));
         return goods.size();
+    }
+
+    /**
+     * 获取所有商品列表
+     *
+     * @return List<Goods> 商品列表
+     */
+    public List<Goods> getAllGoodsList() {
+        return goodsMapper.selectList(null);
+    }
+
+    /**
+     * 根据商品id获取商品信息
+     *
+     * @param goodsId 商品id
+     * @return Goods 商品信息
+     */
+    public Goods getGoodsById(Integer goodsId) {
+        return goodsMapper.selectById(goodsId);
+    }
+
+    /**
+     * 获取商品列表
+     *
+     * @param keyword 关键字
+     * @param sort    排序类型
+     * @param order   排序字段
+     * @param sales   销量
+     * @return List<Goods> 商品列表
+     */
+    public List<Goods> getGoodsList(String keyword, String sort, String order, String sales) {
+        // TODO 这里少一个从token获取登录人id的操作
+        Integer userId = 1048;
+        // 查询条件
+        QueryWrapper<Goods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("is_on_sale", 1).eq("is_delete", 0);
+
+        // 如果关键字不为空，添加搜索条件
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            queryWrapper.like("name", keyword);
+
+            // 添加到搜索历史
+            SearchHistory searchHistory = new SearchHistory();
+            searchHistory.setKeyword(keyword);
+            searchHistory.setUserId(userId);
+            searchHistory.setAddTime(LocalDateTime.now());
+            searchHistoryMapper.insert(searchHistory);
+
+            // TODO: 添加对搜索记录统计的逻辑，判断搜索次数并存储为热门关键字
+        }
+        // 排序条件
+        if ("price".equals(sort)) {
+            // 按价格排序
+            if ("asc".equalsIgnoreCase(order)) {
+                queryWrapper.orderByAsc("retail_price");
+            } else {
+                queryWrapper.orderByDesc("retail_price");
+            }
+        } else if ("sales".equals(sort)) {
+            // 按销量排序
+            if ("asc".equalsIgnoreCase(sales)) {
+                queryWrapper.orderByAsc("sell_volume");
+            } else {
+                queryWrapper.orderByDesc("sell_volume");
+            }
+        } else {
+            // 按商品添加时间排序
+            queryWrapper.orderByAsc("sort_order");
+        }
+        // 查询商品数据
+        return goodsMapper.selectList(queryWrapper);
     }
 }

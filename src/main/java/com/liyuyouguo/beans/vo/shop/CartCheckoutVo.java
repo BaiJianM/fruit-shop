@@ -1,6 +1,10 @@
 package com.liyuyouguo.beans.vo.shop;
 
+import com.liyuyouguo.entity.fruitshop.Address;
 import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 订单提交前的检验和填写相关订单信息
@@ -9,4 +13,23 @@ import lombok.Data;
  */
 @Data
 public class CartCheckoutVo {
+
+    private Address checkedAddress;
+
+    private BigDecimal freightPrice;
+
+    private List<CartVo> checkedGoodsList;
+
+    private BigDecimal goodsTotalPrice;
+
+    private BigDecimal orderTotalPrice;
+
+    private BigDecimal actualPrice;
+
+    private Integer goodsCount;
+
+    private Integer outStock;
+
+    private Integer numberChange;
+
 }

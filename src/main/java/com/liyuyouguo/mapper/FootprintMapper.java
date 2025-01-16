@@ -3,18 +3,16 @@ package com.liyuyouguo.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.liyuyouguo.beans.vo.shop.OrderVo;
-import com.liyuyouguo.entity.fruitshop.Order;
+import com.liyuyouguo.entity.fruitshop.Footprint;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
- * 订单Mapper
- *
  * @author baijianmin
  */
 @Repository
-public interface OrderMapper extends BaseMapper<Order> {
+public interface FootprintMapper extends BaseMapper<Footprint> {
+
+    IPage<Footprint> getFootprintByUserId(Page<Footprint> page, @Param("userId") Integer userId);
+
 }

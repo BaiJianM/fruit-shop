@@ -18,6 +18,7 @@ public enum ShopError implements ErrorResponse<Integer> {
     CART_ITEM_NOT_EXIST(1008, "购物车商品不存在"),
     INVALID_CART_OPERATION(1009, "不支持的购物车操作"),
     PRODUCT_ID_NOT_EMPTY(1010, "商品id不能为空"),
+    ORDER_NOT_EXIST(1011, "订单不存在"),
     ;
 
     /**

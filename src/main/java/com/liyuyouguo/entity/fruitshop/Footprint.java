@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Schema(description = "用户足迹表")
 @TableName("hiolabs_footprint")
-public class FootPrint {
+public class Footprint {
 
     private Integer id;
 

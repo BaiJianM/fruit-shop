@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author baijianmin
  */
@@ -55,7 +57,7 @@ public class Settings {
     @JsonProperty("district_id")
     private Integer districtId;
 
-    private Integer countdown;
+    private LocalDateTime countdown;
 
     private Integer reset;
 }

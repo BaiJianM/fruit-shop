@@ -360,7 +360,7 @@ public class CartService {
      * @param addType   添加商品的类型
      * @return CartCheckoutVo 订单提交前的检验和填写相关订单信息
      */
-    public Map<String, Object> checkout(Integer orderId, Integer type, Integer addressId, Integer addType) {
+    public CartCheckoutVo checkout(Integer orderId, Integer type, Integer addressId, Integer addType) {
         // TODO 这里少一个从token获取登录人id的操作
         Integer userId = 1048;
         // 购物车的数量
@@ -452,65 +452,79 @@ public class CartService {
                     FreightTemplateGroup groupData = freightTemplateGroupMapper.selectById(ex.getGroupId());
                     if (groupData != null && groupData.getIsDelete() == 0) {
                         // 4种情况，1、free_by_number > 0  2,free_by_money > 0  3,free_by_number free_by_money > 0,4都等于0
-                        FreightTemplate freightTemplate = freightTemplateMapper.selectById(item.getId());
-                        if (freightTemplate != null) {
-                            if (freightTemplate.getFreightType() == 0) {
-                                if (item.getNumber() > groupData.getStart()) {
-                                    // todo 如果续件是2怎么办？？？
-                                    // 说明大于首件了
-                                    freightPriceForItem = new BigDecimal(groupData.getStart()).multiply(groupData.getStartFee())
-                                            .add(new BigDecimal(item.getNumber() - 1).multiply(groupData.getAddFee()));
-                                } else {
-                                    freightPriceForItem = new BigDecimal(groupData.getStart()).multiply(groupData.getStartFee());
-                                }
-                            } else if (freightTemplate.getFreightType() == 1) {
-                                // todo 如果续件是2怎么办？？？
-                                // 说明大于首件了
-                                if (item.getGoodsWeight() > groupData.getStart()) {
-                                    freightPriceForItem = new BigDecimal(groupData.getStart()).multiply(groupData.getStartFee())
-                                            .add(BigDecimal.valueOf(item.getGoodsWeight() - 1).multiply(groupData.getAddFee()));
-                                } else {
-                                    freightPriceForItem = new BigDecimal(groupData.getStart()).multiply(groupData.getStartFee());
-                                }
-                            }
-                            if (groupData.getFreeByNumber() > 0 && (item.getNumber() >= groupData.getFreeByNumber())) {
-                                    freightPriceForItem = BigDecimal.ZERO;
-
-                            }
-                            if (groupData.getFreeByMoney().compareTo(BigDecimal.ZERO) > 0 && (item.getMoney().compareTo(groupData.getFreeByMoney()) > 0)) {
-                                    freightPriceForItem = BigDecimal.ZERO;
-
-                            }
-                        } else {
-                            log.error("运费模板为空");
-                        }
+                        freightPriceForItem = this.checkAndGetFreightPrice(item, groupData);
                     } else {
                         log.error("运费模板组为空");
                     }
                 } else {
-
+                    FreightTemplateGroup groupData = freightTemplateGroupMapper.selectOne(Wrappers.lambdaQuery(FreightTemplateGroup.class)
+                            .eq(FreightTemplateGroup::getTemplateId, item.getId())
+                            .eq(FreightTemplateGroup::getArea, 0)
+                            .eq(FreightTemplateGroup::getIsDelete, 0));
+                    if (groupData != null) {
+                        freightPriceForItem = this.checkAndGetFreightPrice(item, groupData);
+                    } else {
+                        log.error("运费模板组为空[1]");
+                    }
                 }
-
                 freightPrice = freightPrice.max(freightPriceForItem);
             }
         }
 
-        BigDecimal goodsTotalPrice = (BigDecimal) cartData.get("cartTotal.checkedGoodsAmount");
-        BigDecimal orderTotalPrice = goodsTotalPrice.add(freightPrice);
-        BigDecimal actualPrice = orderTotalPrice;
+        // 计算订单的费用，商品总价
+        BigDecimal goodsTotalPrice = cartData.getCartTotal().getCheckedGoodsAmount();
+        // 订单的总价
+        BigDecimal orderTotalPrice = goodsTotalPrice.add(freightPrice).setScale(2, RoundingMode.DOWN);
+        // 减去其它支付的金额后，要实际支付的金额 TODO 这里有问题，待测
+        BigDecimal actualPrice = orderTotalPrice.setScale(2, RoundingMode.DOWN);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("checkedAddress", checkedAddress);
-        result.put("freightPrice", freightPrice);
-        result.put("checkedGoodsList", checkedGoodsList);
-        result.put("goodsTotalPrice", goodsTotalPrice);
-        result.put("orderTotalPrice", orderTotalPrice.setScale(2, RoundingMode.HALF_UP));
-        result.put("actualPrice", actualPrice.setScale(2, RoundingMode.HALF_UP));
-        result.put("goodsCount", goodsCount);
-        result.put("outStock", outStock);
-        result.put("numberChange", cartData.get("cartTotal.numberChange"));
+        CartCheckoutVo cartCheckoutVo = new CartCheckoutVo();
+        cartCheckoutVo.setCheckedAddress(checkedAddress);
+        cartCheckoutVo.setFreightPrice(freightPrice);
+        cartCheckoutVo.setCheckedGoodsList(checkedGoodsList);
+        cartCheckoutVo.setGoodsTotalPrice(goodsTotalPrice);
+        cartCheckoutVo.setOrderTotalPrice(orderTotalPrice);
+        cartCheckoutVo.setActualPrice(actualPrice);
+        cartCheckoutVo.setGoodsCount(goodsCount);
+        cartCheckoutVo.setOutStock(outStock);
+        cartCheckoutVo.setNumberChange(cartData.getCartTotal().getNumberChange());
 
-        return result;
+        return cartCheckoutVo;
+    }
+
+    private BigDecimal checkAndGetFreightPrice(FreightDataVo item, FreightTemplateGroup groupData) {
+        BigDecimal freightPriceForItem = BigDecimal.ZERO;
+        FreightTemplate freightTemplate = freightTemplateMapper.selectById(item.getId());
+        if (freightTemplate != null) {
+            if (freightTemplate.getFreightType() == 0) {
+                if (item.getNumber() > groupData.getStart()) {
+                    // todo 如果续件是2怎么办？？？
+                    // 说明大于首件了
+                    freightPriceForItem = new BigDecimal(groupData.getStart()).multiply(groupData.getStartFee())
+                            .add(new BigDecimal(item.getNumber() - 1).multiply(groupData.getAddFee()));
+                } else {
+                    freightPriceForItem = new BigDecimal(groupData.getStart()).multiply(groupData.getStartFee());
+                }
+            } else if (freightTemplate.getFreightType() == 1) {
+                // todo 如果续件是2怎么办？？？
+                // 说明大于首件了
+                if (item.getGoodsWeight() > groupData.getStart()) {
+                    freightPriceForItem = new BigDecimal(groupData.getStart()).multiply(groupData.getStartFee())
+                            .add(BigDecimal.valueOf(item.getGoodsWeight() - 1).multiply(groupData.getAddFee()));
+                } else {
+                    freightPriceForItem = new BigDecimal(groupData.getStart()).multiply(groupData.getStartFee());
+                }
+            }
+            if (groupData.getFreeByNumber() > 0 && (item.getNumber() >= groupData.getFreeByNumber())) {
+                freightPriceForItem = BigDecimal.ZERO;
+            }
+            if (groupData.getFreeByMoney().compareTo(BigDecimal.ZERO) > 0 && (item.getMoney().compareTo(groupData.getFreeByMoney()) >= 0)) {
+                freightPriceForItem = BigDecimal.ZERO;
+            }
+        } else {
+            log.error("运费模板为空");
+        }
+        return freightPriceForItem;
     }
 
     private CartInfoVo getAgainCart(Integer orderFrom) {

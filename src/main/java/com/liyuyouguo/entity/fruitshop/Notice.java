@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author baijianmin
  */
@@ -22,7 +24,7 @@ public class Notice {
     private String content;
 
     @JsonProperty("end_time")
-    private Integer endTime;
+    private LocalDateTime endTime;
 
     @JsonProperty("is_delete")
     private Integer isDelete;

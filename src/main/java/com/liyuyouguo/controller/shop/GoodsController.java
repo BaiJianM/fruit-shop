@@ -3,11 +3,14 @@ package com.liyuyouguo.controller.shop;
 import com.liyuyouguo.annotations.FruitShopController;
 import com.liyuyouguo.beans.vo.shop.GoodsInfoVo;
 import com.liyuyouguo.commons.FruitShopResponse;
+import com.liyuyouguo.entity.fruitshop.Goods;
 import com.liyuyouguo.service.shop.GoodsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * 商品控制层
@@ -40,6 +43,42 @@ public class GoodsController {
     @GetMapping("/count")
     public FruitShopResponse<Integer> getGoodsCount() {
         return FruitShopResponse.success(goodsService.getGoodsCount());
+    }
+
+    /**
+     * 获取所有商品列表
+     *
+     * @return List<Goods> 商品列表
+     */
+    @GetMapping("/index")
+    public FruitShopResponse<List<Goods>> getAllGoodsList() {
+        return FruitShopResponse.success(goodsService.getAllGoodsList());
+    }
+
+    /**
+     * 根据商品id获取商品信息
+     *
+     * @param goodsId 商品id
+     * @return Goods 商品信息
+     */
+    @GetMapping("/goodsShare")
+    public FruitShopResponse<Goods> getGoodsById(@RequestParam("id") Integer goodsId) {
+        return FruitShopResponse.success(goodsService.getGoodsById(goodsId));
+    }
+
+    /**
+     * 获取商品列表
+     *
+     * @param keyword 关键字
+     * @param sort    排序类型
+     * @param order   排序字段
+     * @param sales   销量
+     * @return List<Goods> 商品列表
+     */
+    @GetMapping("/list")
+    public FruitShopResponse<List<Goods>> getGoodsList(@RequestParam("keyword") String keyword, @RequestParam("sort") String sort,
+                                                       @RequestParam("order") String order, @RequestParam("sales") String sales) {
+        return FruitShopResponse.success(goodsService.getGoodsList(keyword, sort, order, sales));
     }
 
 }

@@ -29,5 +29,5 @@ public class SearchHistory {
     private LocalDateTime addTime;
 
     @JsonProperty("user_id")
-    private String userId;
+    private Integer userId;
 }
